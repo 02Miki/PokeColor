@@ -19,10 +19,10 @@ import java.nio.file.FileSystems;
 public class PokeColor {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    File directory = new File("config/happytrade");
+    File directory = new File("config/pokecolor");
     final YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
             .nodeStyle(NodeStyle.BLOCK)
-            .path(FileSystems.getDefault().getPath("config", "happytrade", "trade.yml"))
+            .path(FileSystems.getDefault().getPath("config", "pokecolor", "pokecolor.yml"))
             .build();
     static PokeColorConfig config;
     public CommentedConfigurationNode node;

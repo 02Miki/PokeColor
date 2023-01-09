@@ -45,7 +45,6 @@ public class PokeColor {
     private void loadConfig() throws IOException {
         this.node = this.loader.load();
         TypeToken<PokeColorConfig> type = new TypeToken<PokeColorConfig>() {};
-//        final TypeToken<TradeConfig> type = new com.google.gson.reflect.TypeToken<TradeConfig>();
         config = this.node.get(type, new PokeColorConfig());
         saveConfig();
     }

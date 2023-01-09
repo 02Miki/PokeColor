@@ -24,12 +24,10 @@ public class PokeColorCommand {
                 .then(Commands.argument("player", EntityArgument.player())
                         .requires(commandSource -> checkPermission(commandSource, "pokecolor.admin"))
                         .then(Commands.argument("slot", IntegerArgumentType.integer(1, 6))
-//                                .suggests((context, builder) -> buildSuggestion(builder))
                                 .then(Commands.argument("nickname", StringArgumentType.greedyString())
                                         .executes(context -> colorPoke(context.getSource(), EntityArgument.getPlayer(context, "player").getUniqueID(), context.getArgument("slot", Integer.class), context.getArgument("nickname", String.class))))))
 
                 .then(Commands.argument("slot", IntegerArgumentType.integer(1, 6))
-//                        .suggests((context, builder) -> buildSuggestion(builder))
                         .requires(commandSource -> commandSource.getEntity() != null)
                         .then(Commands.argument("nickname", StringArgumentType.greedyString())
                                 .executes(context -> colorPoke(context.getSource(), context.getSource().asPlayer().getUniqueID(), context.getArgument("slot", Integer.class), context.getArgument("nickname", String.class)))));
@@ -57,10 +55,12 @@ public class PokeColorCommand {
         }
 //        ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID()
         StringTextComponent nickComponent = new StringTextComponent(nickname.replace("&", "§"));
-        String rawNick = nickname.replaceAll("&[0-9a-fA-Fk-oK-OrR]", "");
+        String rawNick = nickname.replaceAll(PokeColor.getConfig().getRegex(), "");
 
-        if (rawNick.length() > 16) {
-            source.sendErrorMessage(new StringTextComponent("The nickname you've tried to set is too long! The maximum length is 16!"));
+        int maxChars = PokeColor.getConfig().getMaxChars();
+
+        if (rawNick.length() > maxChars) {
+            source.sendErrorMessage(new StringTextComponent("The nickname you've tried to set is too long! The maximum length is " + maxChars +"!"));
             return 0;
         }
         pokemon.setNickname(nickComponent);

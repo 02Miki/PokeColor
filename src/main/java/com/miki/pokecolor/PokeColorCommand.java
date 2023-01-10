@@ -53,8 +53,9 @@ public class PokeColorCommand {
             source.sendErrorMessage(new StringTextComponent("There's no pokemon in slot " + slot + "!"));
             return 0;
         }
-//        ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID()
-        StringTextComponent nickComponent = new StringTextComponent(nickname.replace("&", "§"));
+
+        String charOnlyRegex = PokeColor.getConfig().getRegex().replace("&", "&(?=").concat(")");
+        StringTextComponent nickComponent = new StringTextComponent(nickname.replaceAll(charOnlyRegex, "§"));
         String rawNick = nickname.replaceAll(PokeColor.getConfig().getRegex(), "");
 
         int maxChars = PokeColor.getConfig().getMaxChars();
